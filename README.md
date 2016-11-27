@@ -18,3 +18,15 @@ Has the unit files used by fleetctl to start services.
 
 # Wordpress Docker-Compose
 Has the yaml file which is used by Compose to create all docker containers needed for running a wordpress site.
+
+# How it works
+Steps-
+1) Use either Vagrant or AWS to run 3 to 4 CoreOS instances. In the former case, utilize VagrantFiles provided.
+2) Regardless of the above choice, use the nginx docker file to create the docker container. This needs to be done outside coreOS. I used Ubuntu 14.04 for this.
+3) Load the docker container created in the last into the coreOS instances.
+4) Run the CoreOS units using fleetctl.
+
+We now have a fully functional nginx load balancer on one of the CoreOS instances and multiple simple nginx pages in the backend.
+
+# Bonus:
+Use docker-compose on the given yml file to quickly run wordpress on a coreOS instance. Docker-compose does all the heavy-lifting for you and you have multiple containers created at once (mysql, frontent, etc.). The unit files for this aren't provided here.
