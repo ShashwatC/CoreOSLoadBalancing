@@ -21,9 +21,13 @@ Has the yaml file which is used by Compose to create all docker containers neede
 
 # How it works
 Steps-
+
 1) Use either Vagrant or AWS to run 3 to 4 CoreOS instances. In the former case, utilize VagrantFiles provided.
+
 2) Regardless of the above choice, use the nginx docker file to create the docker container. This needs to be done outside coreOS. I used Ubuntu 14.04 for this.
+
 3) Load the docker container created in the last into the coreOS instances.
+
 4) Run the CoreOS units using fleetctl.
 
 We now have a fully functional nginx load balancer on one of the CoreOS instances and multiple simple nginx pages in the backend.
