@@ -34,3 +34,44 @@ We now have a fully functional nginx load balancer on one of the CoreOS instance
 
 # Bonus:
 Use docker-compose on the given yml file to quickly run wordpress on a coreOS instance. Docker-compose does all the heavy-lifting for you and you have multiple containers created at once (mysql, frontent, etc.). The unit files for this aren't provided here.
+
+# What do we get?
+
+1) High availabilty cluster - Whenever any node goes down, fleetctl will work with etcd and migrate the affected service to any other node which doesn't conflict with the service. 
+
+2) Nginx Plus has support for on the fly reconfiguarion, and detects machines which goes down and other machines which take their place.
+
+3) Load balancing - Nginx Plus has out of the box support for round-robin, ip_hash and least connected algorithms for load-balancing. 
+
+# What we tested
+
+1) We took down coreos machines and fleet moved the services to another coreos instance.
+2) When this occurs, nginx plus reconfigures itself with the new web servers and directs the requests accordingly.
+3) Nginx Plus load balances the requests and distributes it across all the web servers which are up and running.
+
+# Change load balancing technique
+
+This requires a simple change in the backend.conf file
+
+Current file has the following relevant section-
+
+upstream backend {
+    zone backend 64k;
+}
+
+This defaults to round-robin. To get least connected algorithm (the server with least traffic gets new connections) or ip_hash (so that same client always connects to the same server), you just need to add one line.
+
+upstream backend {
+    least_conn;
+    zone backend 64k;
+}
+
+upstream backend {
+    ip_hash;
+    zone backend 64k;
+}
+
+# Nginx On The Fly
+You can use the settings icon on the Nginx Dashboard and make changes on the fly.
+
+<img src="https://s18.postimg.org/5dt9xshgp/Screenshot_from_2016_11_28_12_57_30.png">
