@@ -55,21 +55,28 @@ This requires a simple change in the backend.conf file
 
 Current file has the following relevant section-
 
+```
 upstream backend {
     zone backend 64k;
 }
+```
+
 
 This defaults to round-robin. To get least connected algorithm (the server with least traffic gets new connections) or ip_hash (so that same client always connects to the same server), you just need to add one line.
 
+```
 upstream backend {
     least_conn;
     zone backend 64k;
 }
+```
 
+```
 upstream backend {
     ip_hash;
     zone backend 64k;
 }
+```
 
 # Nginx On The Fly
 You can use the settings icon on the Nginx Dashboard and make changes on the fly.
