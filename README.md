@@ -80,5 +80,3 @@ upstream backend {
 
 # Nginx On The Fly
 You can use the settings icon on the Nginx Dashboard and make changes on the fly.
-
-<img src="https://s18.postimg.org/5dt9xshgp/Screenshot_from_2016_11_28_12_57_30.png">
